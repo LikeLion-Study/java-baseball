@@ -10,6 +10,7 @@ public class Application {
     static final int NUM_SIZE = 3;
     static final int STATUS_SUCCESS = 1;
     static final int STATUS_FAIL = 0;
+    static final int STATUS_RESTART = 2;
 
     int[] targetNumbers;
     int[] userNumbers;
@@ -136,6 +137,7 @@ public class Application {
             status = STATUS_FAIL;
             System.out.println(strike + "스트라이크");
             if (strike == NUM_SIZE) {
+                status = STATUS_SUCCESS;
                 System.out.println(NUM_SIZE + "개의 숫자를 모두 맞히셨습니다!");
             }
         } else if (strike == 0) {
@@ -156,6 +158,31 @@ public class Application {
             application.printResult();
 
             application.checkStatus(application);
+        }
+        if (status == STATUS_SUCCESS) {
+            getGameOption(application);
+        }
+    }
+
+    private void getGameOption(Application application) {
+        int gameOption = 0;
+        System.out.println("게임을 새로 시작하려면 1, 종료하려면 2를 입력하세요.");
+        Scanner scanner = new Scanner(System.in);
+        try {
+            gameOption = scanner.nextInt();
+
+            if (gameOption == 1) {
+                status = STATUS_RESTART;
+                checkStatus(application);
+
+            } else if (gameOption == 2) {
+                return;
+            } else {
+                throw new IllegalArgumentException();
+            }
+        } catch (Exception e) {
+            System.out.println("1 또는 2를 입력하세요 !!");
+            throw new IllegalArgumentException();
         }
     }
 }
