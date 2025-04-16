@@ -71,8 +71,6 @@ public class Application {
     }
 
     private void match() {
-        targetNumbers = new int[]{1, 2, 3};
-
         ArrayList<Integer> redundants = new ArrayList<>(NUM_SIZE);
 
         strike = matchStrike(redundants);
