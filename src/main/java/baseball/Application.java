@@ -162,6 +162,19 @@ public class Application {
         if (status == STATUS_SUCCESS) {
             getGameOption(application);
         }
+        if (status == STATUS_RESTART) {
+            application.createTargetNumber(1, 9);
+
+            System.out.println("숫자 야구 게임을 시작합니다.");
+
+            application.getUserNumber();
+
+            application.match();
+
+            application.printResult();
+
+            application.checkStatus(application);
+        }
     }
 
     private void getGameOption(Application application) {
