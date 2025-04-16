@@ -8,12 +8,16 @@ import java.util.stream.IntStream;
 
 public class Application {
     static final int NUM_SIZE = 3;
+    static final int STATUS_SUCCESS = 1;
+    static final int STATUS_FAIL = 0;
 
     int[] targetNumbers;
     int[] userNumbers;
 
     int strike;
     int ball;
+
+    int status;
 
     public static void main(String[] args) {
 
@@ -28,6 +32,8 @@ public class Application {
         application.match();
 
         application.printResult();
+
+        application.checkStatus(application);
 
     }
 
@@ -124,16 +130,32 @@ public class Application {
 
     private void printResult() {
         if (ball == 0 && (strike == 0)) {
+            status = STATUS_FAIL;
             System.out.println("미스");
         } else if (ball == 0) {
+            status = STATUS_FAIL;
             System.out.println(strike + "스트라이크");
             if (strike == NUM_SIZE) {
                 System.out.println(NUM_SIZE + "개의 숫자를 모두 맞히셨습니다!");
             }
         } else if (strike == 0) {
+            status = STATUS_FAIL;
             System.out.println(ball + "볼");
         } else {
+            status = STATUS_FAIL;
             System.out.println(ball + "볼" + " " + strike + "스트라이크");
+        }
+    }
+
+    private void checkStatus(Application application) {
+        if (status == STATUS_FAIL) {
+            application.getUserNumber();
+
+            application.match();
+
+            application.printResult();
+
+            application.checkStatus(application);
         }
     }
 }
