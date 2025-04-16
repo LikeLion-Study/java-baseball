@@ -1,6 +1,7 @@
 package baseball;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.stream.IntStream;
@@ -25,6 +26,8 @@ public class Application {
         application.getUserNumber();
 
         application.match();
+
+        application.printResult();
 
     }
 
@@ -119,5 +122,20 @@ public class Application {
             }
         }
         return ball;
+    }
+
+    private void printResult() {
+        if (ball == 0 && (strike == 0)) {
+            System.out.println("미스");
+        } else if (ball == 0) {
+            System.out.println(strike + "스트라이크");
+            if (strike == NUM_SIZE) {
+                System.out.println(NUM_SIZE + "개의 숫자를 모두 맞히셨습니다!");
+            }
+        } else if (strike == 0) {
+            System.out.println(ball + "볼");
+        } else {
+            System.out.println(ball + "볼" + " " + strike + "스트라이크");
+        }
     }
 }
