@@ -1,5 +1,6 @@
 package baseball;
 
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.stream.IntStream;
@@ -10,6 +11,9 @@ public class Application {
     int[] targetNumbers;
     int[] userNumbers;
 
+    int strike;
+    int ball;
+
     public static void main(String[] args) {
 
         Application application = new Application();
@@ -19,6 +23,8 @@ public class Application {
         System.out.println("숫자 야구 게임을 시작합니다.");
 
         application.getUserNumber();
+
+        application.match();
 
     }
 
@@ -41,7 +47,7 @@ public class Application {
         validateInput(input);
 
         userNumbers = new int[input.length()];
-        for (int i = 0 ; i < input.length() ; i++) {
+        for (int i = 0; i < input.length(); i++) {
             userNumbers[i] = Integer.parseInt(String.valueOf(input.charAt(i)));  // todo: 리팩토링
         }
     }
@@ -59,5 +65,59 @@ public class Application {
             System.out.println("1~9 사이 3개의 숫자를 입력해주세요 !!");
             throw new IllegalArgumentException();
         }
+    }
+
+    private void match() {
+        targetNumbers = new int[]{1, 2, 3};
+
+        ArrayList<Integer> redundants = new ArrayList<>(NUM_SIZE);
+
+        strike = matchStrike(redundants);
+
+        ball = matchBall(redundants);
+    }
+
+    private int matchStrike(ArrayList<Integer> redundants) {
+        int strike = 0;
+
+        for (int i = 0; i < NUM_SIZE; i++) {
+            if (redundants.contains(i)) continue;
+
+            for (int j = 0; j < NUM_SIZE; j++) {
+                if (redundants.contains(j)) continue;
+
+                if (targetNumbers[i] == userNumbers[j] && (i == j)) {
+                    strike++;
+                    redundants.add(j);
+
+                    break;
+                }
+            }
+        }
+
+        return strike;
+    }
+
+    private int matchBall(ArrayList<Integer> redundants) {
+        int ball = 0;
+        ArrayList<Integer> ballRedundants = new ArrayList<>(NUM_SIZE);
+
+        for (int i = 0; i < NUM_SIZE; i++) {
+            if (redundants.contains(i)) continue;
+
+            for (int j = 0; j < NUM_SIZE; j++) {
+                if (redundants.contains(j)) continue;
+                if (ballRedundants.contains(j)) continue;
+                ;
+
+                if (targetNumbers[i] == userNumbers[j]) {
+                    ball++;
+                    ballRedundants.add(j);
+
+                    break;
+                }
+            }
+        }
+        return ball;
     }
 }
