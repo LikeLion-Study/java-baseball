@@ -36,11 +36,28 @@ public class Application {
         System.out.print("숫자를 입력해주세요 : ");
 
         Scanner scanner = new Scanner(System.in);
-        String input = scanner.nextLine();
+        String input = scanner.nextLine().replaceAll("\\s+", "");
+
+        validateInput(input);
 
         userNumber = new int[input.length()];
         for (int i = 0 ; i < input.length() ; i++) {
             userNumber[i] = Integer.parseInt(String.valueOf(input.charAt(i)));  // todo: 리팩토링
+        }
+    }
+
+    private void validateInput(String input) {
+        try {
+            Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            System.out.println("숫자를 입력해주세요 !!");
+            throw new IllegalArgumentException();
+        }
+
+
+        if (input.length() != NUM_SIZE) {
+            System.out.println("1~9 사이 3개의 숫자를 입력해주세요 !!");
+            throw new IllegalArgumentException();
         }
     }
 }
