@@ -1,12 +1,14 @@
 package baseball;
 
 import java.util.Random;
+import java.util.Scanner;
 import java.util.stream.IntStream;
 
 public class Application {
     static final int NUM_SIZE = 3;
 
     int[] targetNumber;
+    int[] userNumber;
 
     public static void main(String[] args) {
 
@@ -15,6 +17,8 @@ public class Application {
         application.createTargetNumber(1, 9);
 
         System.out.println("숫자 야구 게임을 시작합니다.");
+
+        application.getUserNumber();
 
     }
 
@@ -25,5 +29,18 @@ public class Application {
         IntStream intStream = random.ints(start, end + 1).limit(NUM_SIZE);
 
         targetNumber = intStream.toArray();
+    }
+
+    private void getUserNumber() {
+
+        System.out.print("숫자를 입력해주세요 : ");
+
+        Scanner scanner = new Scanner(System.in);
+        String input = scanner.nextLine();
+
+        userNumber = new int[input.length()];
+        for (int i = 0 ; i < input.length() ; i++) {
+            userNumber[i] = Integer.parseInt(String.valueOf(input.charAt(i)));  // todo: 리팩토링
+        }
     }
 }
