@@ -1,5 +1,6 @@
 package baseball;
 
+import java.util.Arrays;
 import java.util.Random;
 import java.util.stream.IntStream;
 
@@ -12,6 +13,8 @@ public class Application {
         Application application = new Application();
 
         application.createTargetNumber(1, 9, 3);
+
+        System.out.println("숫자 야구 게임을 시작합니다.");
 
     }
 
