@@ -7,8 +7,8 @@ import java.util.stream.IntStream;
 public class Application {
     static final int NUM_SIZE = 3;
 
-    int[] targetNumber;
-    int[] userNumber;
+    int[] targetNumbers;
+    int[] userNumbers;
 
     public static void main(String[] args) {
 
@@ -28,7 +28,7 @@ public class Application {
 
         IntStream intStream = random.ints(start, end + 1).limit(NUM_SIZE);
 
-        targetNumber = intStream.toArray();
+        targetNumbers = intStream.toArray();
     }
 
     private void getUserNumber() {
@@ -40,9 +40,9 @@ public class Application {
 
         validateInput(input);
 
-        userNumber = new int[input.length()];
+        userNumbers = new int[input.length()];
         for (int i = 0 ; i < input.length() ; i++) {
-            userNumber[i] = Integer.parseInt(String.valueOf(input.charAt(i)));  // todo: 리팩토링
+            userNumbers[i] = Integer.parseInt(String.valueOf(input.charAt(i)));  // todo: 리팩토링
         }
     }
 
