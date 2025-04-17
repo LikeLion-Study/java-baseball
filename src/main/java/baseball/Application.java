@@ -146,6 +146,11 @@ public class Application {
 
     private void checkStatus(Application application) {
         if (gameStatus == GameStatus.FAIL) {
+            for (BaseballNumber targetNumber: application.targetNumbers) {
+                targetNumber.setStrike(false);
+                targetNumber.setBall(false);
+            }
+
             application.getUserNumber();
 
             application.match();
