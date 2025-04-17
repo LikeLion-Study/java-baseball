@@ -150,6 +150,7 @@ public class Application {
                 targetNumber.setStrike(false);
                 targetNumber.setBall(false);
             }
+            userNumbers = null;
 
             application.getUserNumber();
 
