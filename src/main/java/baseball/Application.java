@@ -1,10 +1,11 @@
 package baseball;
 
+import baseball.model.BaseballNumber;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
-import java.util.stream.IntStream;
 
 public class Application {
     static final int NUM_SIZE = 3;
@@ -12,11 +13,8 @@ public class Application {
     static final int STATUS_FAIL = 0;
     static final int STATUS_RESTART = 2;
 
-    int[] targetNumbers;
-    int[] userNumbers;
-
-    int strike;
-    int ball;
+    BaseballNumber[] targetNumbers;
+    BaseballNumber[] userNumbers;
 
     int status;
 
@@ -39,12 +37,15 @@ public class Application {
     }
 
     private void createTargetNumber(int start, int end) {
+        targetNumbers = new BaseballNumber[NUM_SIZE];
 
-        Random random = new Random();
+        for (int i = 0; i < NUM_SIZE; i++) {
+            targetNumbers[i] = new BaseballNumber(new Random().nextInt(end) + start);
+        }
 
-        IntStream intStream = random.ints(start, end + 1).limit(NUM_SIZE);
-
-        targetNumbers = intStream.toArray();
+        for (BaseballNumber targetNumber: targetNumbers) {  // todo: 디버그용
+            System.out.println(targetNumber.getValue());
+        }
     }
 
     private void getUserNumber() {
@@ -56,9 +57,11 @@ public class Application {
 
         validateInput(input);
 
-        userNumbers = new int[input.length()];
-        for (int i = 0; i < input.length(); i++) {
-            userNumbers[i] = Integer.parseInt(String.valueOf(input.charAt(i)));  // todo: 리팩토링
+        userNumbers = new BaseballNumber[NUM_SIZE];
+        int inputNumber;
+        for (int i = 0; i < NUM_SIZE; i++) {
+            inputNumber = Integer.parseInt(String.valueOf(input.charAt(i))); // todo: 리팩토링
+            userNumbers[i] = new BaseballNumber(inputNumber);
         }
     }
 
@@ -78,58 +81,49 @@ public class Application {
     }
 
     private void match() {
-        ArrayList<Integer> redundants = new ArrayList<>(NUM_SIZE);
-
-        strike = matchStrike(redundants);
-
-        ball = matchBall(redundants);
+        checkStrike();
+        checkBall();
     }
 
-    private int matchStrike(ArrayList<Integer> redundants) {
-        int strike = 0;
+    private void checkStrike() {
+        for (int index = 0; index < NUM_SIZE; index++) {
+            if ( userNumbers[index].getValue() == targetNumbers[index].getValue()) {
+                userNumbers[index].setStrike(true);
+                targetNumbers[index].setStrike(true);
+            }
+        }
+    }
 
-        for (int i = 0; i < NUM_SIZE; i++) {
-            if (redundants.contains(i)) continue;
+    private void checkBall() {
+        for (int userIndex = 0; userIndex < NUM_SIZE; userIndex++) {
+            if (userNumbers[userIndex].isStrike()) continue;
+            for (int targetIndex = 0; targetIndex < NUM_SIZE; targetIndex++) {
+                if (targetNumbers[targetIndex].isStrike()) continue;
 
-            for (int j = 0; j < NUM_SIZE; j++) {
-                if (redundants.contains(j)) continue;
-
-                if (targetNumbers[i] == userNumbers[j] && (i == j)) {
-                    strike++;
-                    redundants.add(j);
-
+                if (userNumbers[userIndex].getValue() == targetNumbers[targetIndex].getValue()) {
+                    userNumbers[userIndex].setBall(true);
+                    targetNumbers[targetIndex].setBall(true);
                     break;
                 }
             }
         }
-
-        return strike;
-    }
-
-    private int matchBall(ArrayList<Integer> redundants) {
-        int ball = 0;
-        ArrayList<Integer> ballRedundants = new ArrayList<>(NUM_SIZE);
-
-        for (int i = 0; i < NUM_SIZE; i++) {
-            if (redundants.contains(i)) continue;
-
-            for (int j = 0; j < NUM_SIZE; j++) {
-                if (redundants.contains(j)) continue;
-                if (ballRedundants.contains(j)) continue;
-                ;
-
-                if (targetNumbers[i] == userNumbers[j]) {
-                    ball++;
-                    ballRedundants.add(j);
-
-                    break;
-                }
-            }
-        }
-        return ball;
     }
 
     private void printResult() {
+        int strike = 0;
+        int ball = 0;
+
+        for (BaseballNumber targetNumber: targetNumbers) {  // todo: strike와 ball 계산 책임  // 분리 필요
+            if (targetNumber.isStrike()) {
+                strike++;
+                continue;
+            }
+            if (targetNumber.isBall()) {
+                ball++;
+            }
+        }
+
+
         if (ball == 0 && (strike == 0)) {
             status = STATUS_FAIL;
             System.out.println("미스");
