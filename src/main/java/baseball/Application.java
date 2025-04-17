@@ -73,6 +73,11 @@ public class Application {
             throw new IllegalArgumentException();
         }
 
+        if (input.contains("0")) {
+            System.out.println("1~9 사이 3개의 숫자를 입력해주세요 !!");
+            throw new IllegalArgumentException();
+        }
+
 
         if (input.length() != NUM_SIZE) {
             System.out.println("1~9 사이 3개의 숫자를 입력해주세요 !!");
