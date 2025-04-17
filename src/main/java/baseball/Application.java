@@ -1,20 +1,18 @@
 package baseball;
 
 import baseball.model.BaseballNumber;
+import baseball.model.GameStatus;
 
 import java.util.Random;
 import java.util.Scanner;
 
 public class Application {
     static final int NUM_SIZE = 3;
-    static final int STATUS_SUCCESS = 1;
-    static final int STATUS_FAIL = 0;
-    static final int STATUS_RESTART = 2;
 
     BaseballNumber[] targetNumbers;
     BaseballNumber[] userNumbers;
 
-    int status;
+    GameStatus gameStatus;
 
     public static void main(String[] args) {
 
@@ -128,26 +126,26 @@ public class Application {
 
 
         if (ball == 0 && (strike == 0)) {
-            status = STATUS_FAIL;
+            gameStatus = GameStatus.FAIL;
             System.out.println("미스");
         } else if (ball == 0) {
-            status = STATUS_FAIL;
+            gameStatus = GameStatus.FAIL;
             System.out.println(strike + "스트라이크");
             if (strike == NUM_SIZE) {
-                status = STATUS_SUCCESS;
+                gameStatus = GameStatus.SUCCESS;
                 System.out.println(NUM_SIZE + "개의 숫자를 모두 맞히셨습니다!");
             }
         } else if (strike == 0) {
-            status = STATUS_FAIL;
+            gameStatus = GameStatus.FAIL;
             System.out.println(ball + "볼");
         } else {
-            status = STATUS_FAIL;
+            gameStatus = GameStatus.FAIL;
             System.out.println(ball + "볼" + " " + strike + "스트라이크");
         }
     }
 
     private void checkStatus(Application application) {
-        if (status == STATUS_FAIL) {
+        if (gameStatus == GameStatus.FAIL) {
             application.getUserNumber();
 
             application.match();
@@ -156,10 +154,10 @@ public class Application {
 
             application.checkStatus(application);
         }
-        if (status == STATUS_SUCCESS) {
+        if (gameStatus == GameStatus.SUCCESS) {
             getGameOption(application);
         }
-        if (status == STATUS_RESTART) {
+        if (gameStatus == GameStatus.RESTART) {
             application.createTargetNumber(1, 9);
 
             System.out.println("숫자 야구 게임을 시작합니다.");
@@ -182,7 +180,7 @@ public class Application {
             gameOption = scanner.nextInt();
 
             if (gameOption == 1) {
-                status = STATUS_RESTART;
+                gameStatus = GameStatus.RESTART;
                 checkStatus(application);
 
             } else if (gameOption == 2) {
