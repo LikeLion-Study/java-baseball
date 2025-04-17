@@ -1,6 +1,6 @@
 package baseball.model;
 
-// 시스템이 생성하는 랜덤한 숫자 1개  // vo class
+// vo class
 public class BaseballNumber {
     private final int value;
 

@@ -2,8 +2,6 @@ package baseball;
 
 import baseball.model.BaseballNumber;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
 
