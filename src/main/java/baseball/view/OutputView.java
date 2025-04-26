@@ -54,11 +54,15 @@ public class OutputView {
                 game.createTargetNumber(1, 9);
                 game.setStatus(GameStatus.RESTART); // 의미가 있나?
                 return true;
+            } else if (option == 2) return false;
+            else {
+                // 1,2 외의 숫자
+                System.out.println(Message.MESSAGE_RESTART_ERROR);
+                throw new IllegalArgumentException();
             }
-            if (option == 2) return false;
-        } catch (Exception e) {
+        } catch (Exception e) {  // 잘못된 타입
             System.out.println(Message.MESSAGE_RESTART_ERROR);
+            throw e;
         }
-        throw new IllegalArgumentException();
     }
 }
