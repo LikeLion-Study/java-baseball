@@ -41,13 +41,13 @@ public class BaseballGame {
     }
 
     private void checkBall() {
-        for (int userIndex = 0; userIndex < NUM_SIZE; userIndex++) {
-            if (userNumbers[userIndex].isStrike()) continue;
-            for (int targetIndex = 0; targetIndex < NUM_SIZE; targetIndex++) {
-                if (targetNumbers[targetIndex].isBall()) continue;
-                if (userNumbers[userIndex].getValue() == targetNumbers[targetIndex].getValue()) {
+        for (int targetIndex = 0; targetIndex < NUM_SIZE; targetIndex++) {
+            if (targetNumbers[targetIndex].isStrike()) continue;
+            for (int userIndex = 0; userIndex < NUM_SIZE; userIndex++) {
+                if (userNumbers[userIndex].isBall()) continue;
+                if (targetNumbers[targetIndex].getValue() == userNumbers[userIndex].getValue()) {
+                    targetNumbers[userIndex].setBall(true);
                     userNumbers[userIndex].setBall(true);
-                    targetNumbers[targetIndex].setBall(true);
                     break;
                 }
             }
