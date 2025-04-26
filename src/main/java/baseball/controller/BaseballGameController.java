@@ -4,6 +4,8 @@ import baseball.model.BaseballGame;
 import baseball.view.InputView;
 import baseball.view.OutputView;
 
+import java.util.Scanner;
+
 public class BaseballGameController {
     private final BaseballGame game = new BaseballGame();
     private final InputView inputView = new InputView();
@@ -20,10 +22,10 @@ public class BaseballGameController {
             game.reset();  // targetNumber의 상태 초기화 및 이전 userNumber free
             inputView.getUserNumber(game);
             game.match();
-            outputView.printResult(game);
+            outputView.printResult(game);  //todo:  ball, strike 연산을 view클래스에서?
 
-            if (game.getStatus() == baseball.model.GameStatus.SUCCESS) {
-                if (outputView.isRestart(game)) continue;  // todo: 클래스 위치가 view?
+            if (game.getStatus() == baseball.model.GameStatus.SUCCESS) {  // todo: 이것도 따로 함수로 빼야될 듯
+                if (outputView.isRestart(game)) continue;  // todo: restart 연산을 view클래스에서?
                 break;
             }
         }

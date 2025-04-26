@@ -26,7 +26,7 @@ public class OutputView {
             }
         }
 
-        if (ball == 0 && strike == 0) {
+        if (ball == 0 && strike == 0) {  // todo: 연산을 view클래스에서?
             game.setStatus(GameStatus.FAIL);
             System.out.println(Message.MESSAGE_MISS);
         } else if (ball == 0) {
