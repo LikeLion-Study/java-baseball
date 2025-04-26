@@ -44,7 +44,7 @@ public class BaseballGame {
         for (int userIndex = 0; userIndex < NUM_SIZE; userIndex++) {
             if (userNumbers[userIndex].isStrike()) continue;
             for (int targetIndex = 0; targetIndex < NUM_SIZE; targetIndex++) {
-                if (targetNumbers[targetIndex].isStrike()) continue;
+                if (targetNumbers[targetIndex].isBall()) continue;
                 if (userNumbers[userIndex].getValue() == targetNumbers[targetIndex].getValue()) {
                     userNumbers[userIndex].setBall(true);
                     targetNumbers[targetIndex].setBall(true);
